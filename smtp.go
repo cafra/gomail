@@ -39,14 +39,14 @@ type Dialer struct {
 
 // NewDialer returns a new SMTP Dialer. The given parameters are used to connect
 // to the SMTP server.
-func NewDialer(host string, port int, username, password string) *Dialer {
+func NewDialer(host string, port int, username, password string, timeout time.Duration) *Dialer {
 	return &Dialer{
 		Host:     host,
 		Port:     port,
 		Username: username,
 		Password: password,
 		SSL:      port == 465,
-		Timeout:  20 * time.Second,
+		Timeout:  timeout,
 	}
 }
 
@@ -54,8 +54,8 @@ func NewDialer(host string, port int, username, password string) *Dialer {
 // connect to the SMTP server.
 //
 // Deprecated: Use NewDialer instead.
-func NewPlainDialer(host string, port int, username, password string) *Dialer {
-	return NewDialer(host, port, username, password)
+func NewPlainDialer(host string, port int, username, password string,timeout time.Duration) *Dialer {
+	return NewDialer(host, port, username, password,timeout)
 }
 
 // Dial dials and authenticates to an SMTP server. The returned SendCloser
